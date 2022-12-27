@@ -1,0 +1,22 @@
+include "../Shared/SharedIds.ifh"
+include "ACDIds.ifh"
+declid l_BeforeConnectSB id{A2B3C747-7E9C-4077-89C6-8B85EE7204DA} 
+
+const string HostProcess = "TAPIEventHandler"
+
+l_Services:
+persistent object Services
+l_ACDEnterQueue:
+	ACDEnterQueueSB ACDEnterQueue
+		string __HostProcess = HostProcess
+		object ServiceBlock_AfterAbandoned
+			string __HostProcess = HostProcess
+			string __ProgID = "INFra.ServiceBlock.Scripting"
+			Language    = "VBScript"
+			DisplayName = "ACD After Abandoned SB"
+			Branches    =1
+			Script = import "AfterAbandonedAction.vbs"
+			StartupScript = import "AfterAbandonedAction_startup.vbs"
+		end
+	end
+end //services

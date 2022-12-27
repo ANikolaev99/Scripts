@@ -1,8 +1,8 @@
 ﻿#:: Этот блок обьявляет переменные
 $date = get-date -uformat "%Y.%m.%d"
-$d1 = "C:\Works\Temp\scripts\log.txt"
-$d2 = "C:\Works\Temp\scripts\Temp\"
-$result = "C:\Works\Temp\scripts\result.txt"
+$d1 = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\log.txt"
+$d2 = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\Temp\Logs\"
+$result = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\result.txt"
 
 #:: Этот блок записывает в файл результат выпонлнения
 "Скопировано $date в $d2" >> $result
@@ -21,7 +21,9 @@ $port = 587
 $From = "itsupport@salestelecom.by" 
 
 #Кому
-$To = "nikolka.99@gmail.com" 
+$To = "k.ivanov@cdek.ru"
+$Toto = "r.galikberova@cdek.ru"
+$Totree = "nikalayeua@salestelecom.by"
 
 #Тема письма
 $subject = $date
@@ -31,7 +33,7 @@ $user = "itsupport@salestelecom.by"
 $pass = "DobroeUtro1!"
 
 #Путь до файла 
-$file = "C:\Works\Temp\scripts\Temp\$date.txt"
+$file = "c:\Program Files\INFRATEL\integrations\Call-distribution-platform\Temp\Logs\$date.txt"
 
 #Создаем два экземпляра класса
 $att = New-object Net.Mail.Attachment($file)
@@ -40,9 +42,11 @@ $mes = New-Object System.Net.Mail.MailMessage
 #Формируем данные для отправки
 $mes.From = $from
 $mes.To.Add($to) 
+$mes.To.Add($Toto)
+$mes.To.Add($Totree)
 $mes.Subject = $subject 
 $mes.IsBodyHTML = $true 
-$mes.Body = "<h1>Тестовое письмо</h1>"
+$mes.Body = "<h1>Log за прошлый день</h1>"
 
 #Добавляем файл
 $mes.Attachments.Add($att) 

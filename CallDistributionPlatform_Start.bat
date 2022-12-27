@@ -1,0 +1,1 @@
+cscript "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\CallDistributionPlatform.vbs"
