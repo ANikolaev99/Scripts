@@ -19,7 +19,7 @@ Dim centerId : centerId = "869f9131-984c-447e-b0ba-9ef32de0e75c" 'уникальный иде
 '---------------------------------------------------
 ' Рабочее время КЦ
 '---------------------------------------------------
-Dim WorkHourStart : WorkHourStart = 9 'Время начала
+Dim WorkHourStart : WorkHourStart = 8 'Время начала
 Dim WorkHourStop : WorkHourStop = 21 'Время окончания
 
 '---------------------------------------------------
@@ -27,7 +27,7 @@ Dim WorkHourStop : WorkHourStop = 21 'Время окончания
 ' Системные константы 
 '---------------------------------------------------
 '---------------------------------------------------
-Dim LogFileName : LogFileName = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\Log.txt"
+Dim LogFileName : LogFileName = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\"
 Dim LogType : LogType = 2 ' 0- win console, 1- debug console, 2- file, other values - log is off
 
 '---------------------------------------------------
@@ -54,8 +54,9 @@ Sub LogMessage(Text)
 			OutputDebugString "[dispatcher.vbs]: " & Text & vbCrLf, true
 		Case 2 ' file
 			On Error Resume Next
+			Dim LogFileName_temp : LogFileName_temp = LogFileName + "CDP_"+ Cstr(Year(Now))+Cstr(Month(Now))+Cstr(Day(Now)) + ".log"
 			Dim objFSO : Set objFSO = CreateObject("Scripting.FileSystemObject")
-			Dim objLogFile : Set objLogFile = objFSO.OpenTextFile(LogFileName, 8, True)
+			Dim objLogFile : Set objLogFile = objFSO.OpenTextFile(LogFileName_temp, 8, True)
 			objLogfile.WriteLine Now & " : " & Text
 			objLogFile.Close 
 			On Error Goto 0
@@ -192,7 +193,13 @@ Function CountCallQueue(QueueID)
 	
 	for each request in pos
 		if request.Queue.QueueID = "{"& QueueID &"}" then
-			i = I + 1
+			'Status = 1073741837 - разговор c оператором
+			'Status = 1073741831 - распределен на оператора 
+			'Status = 1073741836 - ожидание в очереди
+			if request.State = 1073741836 then
+				'LogMessage( "Status = " & CStr(Status))
+				i = I + 1
+			end if
 		end if
 	next
 	LogMessage( "waiting = " & CStr(i))
@@ -247,7 +254,7 @@ End Function
 
 Function ProcessCall()
 	
-	If Hour(Now) >= WorkHourStart and Hour(Now) < WorkHourStop Then
+	If Hour(Now) > WorkHourStart and Hour(Now) < WorkHourStop Then
 	LogMessage( "Start")
 	
 	Dim Token, AVGTT, AW, CCQ, AWT, PM,AWTstr
