@@ -1,6 +1,6 @@
 ﻿#:: Этот блок обьявляет переменные
 $date = get-date -uformat "%Y.%m.%d"
-$d1 = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\log.txt"
+$d1 = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\CDP_*"
 $d2 = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\Temp\Logs\"
 $result = "C:\Program Files\INFRATEL\integrations\Call-distribution-platform\result.txt"
 
@@ -21,7 +21,7 @@ $port = 587
 $From = "itsupport@salestelecom.by" 
 
 #Кому
-$To = "k.ivanov@cdek.ru"
+$To = "m.samokrutov@cdek.ru"
 $Toto = "r.galikberova@cdek.ru"
 $Totree = "nikalayeua@salestelecom.by"
 
